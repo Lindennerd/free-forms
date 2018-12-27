@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="field-types">Field Types</label>
+                    <select name="field-types" class="form-control">
+                        <option value="" selected disabled>Select any type of field</option>
+                        {{#each fieldTypes}}
+                        <option value="{{name}}">{{displayName}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+                <div id="fields"></div>
+                
+            </div>
+            <div class="card-footer">
+                <input type="submit" class="btn btn-primary" name="add-field" value="Add Field">
+            </div>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="name">Form Name</label>
+                    <input type="text" class="form-control" name="name">
+                </div>
+            </div>
+            <div class="card-footer">
+                <input type="submit" class="btn btn-success" name="save" value="Save This!">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="javascripts/index.js"></script>

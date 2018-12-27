@@ -1,0 +1,14 @@
+[
+    {
+        "name": "textfield",
+        "displayName": "Text Field"
+    },
+    {
+        "name": "selectfield",
+        "displayName": "Select Field"
+    },
+    {
+        "name": "datefield",
+        "displayName": "Date Field"
+    }
+]
