@@ -1,15 +1,27 @@
-$(document).ready(function(){
+$(document).ready(function () {
   const $field = $('#fields');
-  $('[name="field-types"]').change(function(ev) {
+  let currentField = null;
+
+  $('[name="field-types"]').change(function (ev) {
     $field.children().remove();
 
     const selectedField = $(ev.target).val();
-    if(selectedField === 'textfield') {
-      textfield.build($field);
+    if (selectedField === 'textfield') {
+      textfield.setField($field);
+      currentField = textfield;
     }
 
-    if(selectedField === 'selectfield') {
-      selectfield.build($field);
+    if (selectedField === 'selectfield') {
+      selectfield.setField($field);
+      currentField = selectfield;
     }
+  });
+
+  $('[name="add-field"]').click(function () {
+    const field = currentField.getField();
+    form.addField(field);
+
+    $field.children().remove();
+    $('[name="field-types"]').val(0);
   });
 })

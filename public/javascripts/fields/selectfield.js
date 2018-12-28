@@ -1,73 +1,87 @@
 const selectfield = (function ($) {
 
-    const $table = $('<table>', {
-        class: 'table table-striped table-responsive',
-        style: 'margin-top: 1em',
-        id: 'options-table'
+  const $listGroup = $('<ul>', {
+    class: 'list-group',
+    style: 'margin-top: 1em'
+  });
+
+  function removeOption(ev) {
+    var $li = $(ev.target).parent();
+    $li.remove();
+  }
+
+  function addOption() {
+    if ($('[name="new-option"]').val() == "") {
+      return;
+    }
+
+    const $li = $('<li>', {
+      class: 'list-group-item d-flex justify-content-between align-items-center',
+      text: $('[name="new-option"]').val()
     });
 
-    function editOption(ev) {
-        const row = $(ev.target).parentsUntil('tr');
-        $('[name="new-option-text"]').val($('option-name', row).text());
-        $('[name="new-option-value"]').val($('option-value', row).text());
+    const $span = $('<span>', {
+      class: 'badge badge-danger badge-pill',
+      style: 'cursor: pointer;',
+      text: 'x',
+      click: removeOption
+    });
 
-        row.remove();
-    }
+    $li.append($span);
+    $listGroup.append($li);
+    $('[name="new-option"]').val('')
+  }
 
-    function deleteOption(ev) {
-        const row = $(ev.target).parentsUntil('tr');
-        row.remove();
-    }
+  return {
+    setField: function (base) {
+      base.append(fieldFactory.build({
+        text: 'Enter your question',
+        name: 'question',
+        type: 'text'
+      }));
 
-    function clearFields() {
-      $('[name="new-option-text"]').val('');
-    }
+      base.append(fieldFactory.build({
+        text: 'Enter an Option',
+        name: 'new-option',
+        type: 'text',
+        onBlur: addOption
+      }));
 
-    function addOption() {
-        const row = $('<tr>');
-            row.append($('<td>', {
-                text: $('[name="new-option-text"]').val(),
-                class: 'option-name'
-            }));
+      base.append($('<button>', {
+        class: 'btn btn-primary',
+        text: 'Add Option',
+        click: addOption
+      }));
 
-            row.append($('<td>').append($('<button>', {
-                text: 'Edit',
-                class: 'btn btn-primary',
-                click: editOption
-            })));
+      base.append($listGroup);
+    },
 
-            row.append($('<td>').append($('<button>', {
-                text: 'Delete',
-                class: 'btn btn-danger',
-                click: deleteOption
-            })));
-
-            $table.append(row);
-            clearFields();
-    }
-
-    return {
-      build: function (base) {
-        base.append(fieldFactory.build({
-          text: 'Enter your question',
-          name: 'question',
-          type: 'text'
-        }));
-
-        base.append(fieldFactory.build({
-            text: 'New Option',
-            name: 'new-option-text',
-            type: 'text'
-        }));
-
-
-        base.append($('<button>', {
-            class: 'btn btn-primary',
-            text: 'Add Option',
-            click: addOption
-        }))
-
-        base.append($table)
+    getField: function () {
+      return {
+        type: 'selectfield',
+        question: $('[name="question"').val(),
+        options: $('.list-group-item').map(function (index, item) {
+          return item.textContent;
+        })
       }
+    },
+
+    build: function (field) {
+      const $formGroup = $('<div>', { class: 'form-group' });
+      const $select = $('<select>', { class: 'form-control' });
+      const $label = $('<label>', { text: field.question });
+
+      field.options.each(function (index, option) {
+        const $option = $('<option>', { text: option });
+        $select.append($option);
+      });
+
+      $formGroup.append($label);
+      $formGroup.append($select);
+
+      return $formGroup;
     }
-  })(jQuery)
+
+
+  };
+})(jQuery)
