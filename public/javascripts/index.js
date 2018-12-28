@@ -15,6 +15,11 @@ $(document).ready(function () {
       selectfield.setField($field);
       currentField = selectfield;
     }
+
+    if(selectedField === 'datefield') {
+      datefield.setField($field);
+      currentField = datefield;
+    }
   });
 
   $('[name="add-field"]').click(function () {

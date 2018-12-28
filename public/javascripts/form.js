@@ -13,6 +13,10 @@ const form = (function(){
             if(field.type === 'selectfield') {
                 $formFields.append(selectfield.build(field));
             }
+
+            if(field.type === 'datefield') {
+                $formFields.append(datefield.build(field));
+            }
         }
     }
 })();
