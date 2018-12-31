@@ -20,6 +20,11 @@ $(document).ready(function () {
       datefield.setField($field);
       currentField = datefield;
     }
+
+    if(selectedField === 'choicesfield') {
+      choicesField.setField($field);
+      currentField = choicesField;
+    }
   });
 
   $('[name="add-field"]').click(function () {
@@ -29,4 +34,17 @@ $(document).ready(function () {
     $field.children().remove();
     $('[name="field-types"]').val(0);
   });
+
+  $('[name="save"]').click(function() {
+    form.setName($('[name="name"]').val());
+    form.setValidate($('[name="validUntil"]').val());
+
+    if(form.isValid()) {
+      form.save();
+    } else {
+      $(form.validationErrors).each(function(index, error) {
+        console.log(error);
+      }); 
+    }
+  })
 })

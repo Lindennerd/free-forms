@@ -10,5 +10,9 @@
     {
         "name": "datefield",
         "displayName": "Date Field"
+    },
+    {
+        "name": "choicesfield",
+        "displayName": "Multi Choice Field"
     }
 ]
