@@ -1,0 +1,24 @@
+<style>
+    .card-title {
+        font-weight: 500;
+        font-size: 28px;
+    }
+</style>
+
+<p class="alert alert-danger" style="display: none" id="error-message">
+    {{error}}
+</p>
+
+<input type="text" id="form-id" style="display: none" value="{{id}}">
+
+<div class="card" id="form">
+    <div class="card-body">
+        <div class="card-title"></div>
+
+    </div>
+    <div class="card-footer">
+        <button class="btn btn-success" name="send">Send</button>
+    </div>
+</div>
+
+<script src="/javascripts/form.js"></script>

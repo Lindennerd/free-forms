@@ -1,71 +1,34 @@
-const form = (function(){
-    const $formFields = $('#form-fields');
-    const fields = [];
-    let formName = "";
-    let formValidate = null;
+function loadForm(form) {
+    $('#form>.card-body>.card-title').text(form.name);  
 
-    const validationErrors = []
-
-    return{
-        setName: function(name) {
-            formName = name;
-        },
-
-        isValid: function() {
-            let isValid = true;
-            if(!formName || formName === "") {
-                validationErrors.push("Set a Name for the Form");
-                isValid = false;
-            }
-
-            if(fields.length <= 0 ) {
-                validationErrors.push("Configure Fields for this form");
-                isValid = false;
-            }
-
-            if(!formValidate) {
-                validationErrors.push("Set a validation for the form");
-                isValid = false;
-            }
-
-            return isValid;
-        },
-
-        validationErrors: validationErrors,
-
-        setValidate: function(validate) {
-            formValidate = validate;
-        },
-
-        save: function() {
-            const form = {
-                name: formName,
-                validate: formValidate,
-                fields: fields
-            };
-
-            return $.ajax({
-                url: '/save',
-                contentType: 'application/json',
-                data: JSON.stringify(form),
-                method: 'POST'
-            });
-        },
-
-        addField: function(field) {
-            fields.push(field);
-
-            if(field.type === 'textfield') {
-                $formFields.append(textfield.build(field));
-            }
-
-            if(field.type === 'selectfield') {
-                $formFields.append(selectfield.build(field));
-            }
-
-            if(field.type === 'datefield') {
-                $formFields.append(datefield.build(field));
-            }
+    $(form.fields).each(function(index, field){
+        if(field.type === 'textfield') {
+            const fieldGroup = textfield.build(field);
+            $('#form>.card-body').append(fieldGroup);
         }
-    }
-})();
+
+        if(field.type === 'selectfield') {
+            const fieldGroup = selectfield.build(field);
+            $('#form>.card-body').append(fieldGroup);
+        }
+
+        if(field.type === 'datefield') {
+            const fieldGroup = datefield.build(field);
+            $('#form>.card-body').append(fieldGroup);
+        }
+
+        if(field.type === 'choicesfield') {
+            const fieldGroup = choicesField.build(field);
+            $('#form>.card-body').append(fieldGroup);
+        }
+    });
+}
+
+$(document).ready(function(){
+    const formId = $('#form-id').val();
+    $.get('/forms/getById/' + formId)
+        .then(loadForm)
+        .fail(function(err){
+            console.error(err);
+        })
+});
