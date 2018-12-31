@@ -40,7 +40,17 @@ $(document).ready(function () {
     form.setValidate($('[name="validUntil"]').val());
 
     if(form.isValid()) {
-      form.save();
+      form.save()
+        .then(function(response){
+          const link = $('<a>', {
+            href: '/form/' + response, 
+            target: '_blank',
+            style: 'display: none'
+          });
+          $(document.body).append(link);
+
+          link.click();
+        });
     } else {
       $(form.validationErrors).each(function(index, error) {
         console.log(error);

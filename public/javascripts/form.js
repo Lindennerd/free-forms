@@ -44,7 +44,12 @@ const form = (function(){
                 fields: fields
             };
 
-            return $.post('/save', form);
+            return $.ajax({
+                url: '/save',
+                contentType: 'application/json',
+                data: JSON.stringify(form),
+                method: 'POST'
+            });
         },
 
         addField: function(field) {

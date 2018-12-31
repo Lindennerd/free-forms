@@ -26,6 +26,8 @@ router.post('/save', function(req, res, next){
   });
 
   formdb.save();
+
+  res.send(formdb._id);
 });
 
 module.exports = router;
