@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "dev": "DEBUG=freeforms:* npm start"
+    "start": "node ./bin/www",
+    "dev": "DEBUG=freeforms:* nodemon ./bin/www"
   },
   "dependencies": {
     "bootstrap": "^4.2.1",
