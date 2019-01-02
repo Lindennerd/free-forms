@@ -1,5 +1,6 @@
 var express = require('express');
 var formsModel = require('../models/form');
+var mongoose = require('mongoose');
 
 var router = express.Router();
 
@@ -8,12 +9,17 @@ router.get('/:id', function(req, res, next) {
 });
 
 router.get('/getById/:id', function(req, res, next) {
-    formsModel.findById(req.params.id, function(err, result){
+    const id = req.params.id.trim();
+
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        res.status(401).send('Invalid Id');
+    }
+    formsModel.findById(id, function(err, result){
         if(err) throw err;
         var validDate = new Date(result.validUntil);
 
-//        if(validDate >= Date.now()) {
-        if(validDate <= Date.now()) {
+        if(validDate >= Date.now()) {
+//        if(validDate <= Date.now()) {
             res.send({error: 'Form invalid since ' + validDate.toLocaleDateString() });
             return;
         }

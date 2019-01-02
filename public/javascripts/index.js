@@ -42,14 +42,7 @@ $(document).ready(function () {
     if(formRegister.isValid()) {
       formRegister.save()
         .then(function(response){
-          const link = $('<a>', {
-            href: '/form/' + response, 
-            target: '_blank',
-            style: 'display: none'
-          });
-          $(document.body).append(link);
-
-          link.click();
+          window.open('/form/ ' + response, '_blank');
         });
     } else {
       $(formRegister.validationErrors).each(function(index, error) {

@@ -11,11 +11,16 @@ var formsRouter = require('./routes/forms');
 var app = express();
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://lindennerd:mydb1234@ds115283.mlab.com:15283/freeforms')
+
+var dbConnection = app.get('env') === 'development'
+	? 'mongodb://localhost:27017/freeforms'
+	: 'mongodb://lindennerd:mydb1234@ds115283.mlab.com:15283/freeforms';
+
+mongoose.connect(dbConnection);
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 mongoose.connection.on('open', function() {
-  console.log('db connected!');
+  console.log('db connected on ' + dbConnection);
 })
 
 // view engine setup
