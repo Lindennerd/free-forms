@@ -42,7 +42,7 @@ $(document).ready(function () {
     if(formRegister.isValid()) {
       formRegister.save()
         .then(function(response){
-          window.open('/form/ ' + response, '_blank');
+          window.open('/forms/ ' + response, '_blank');
         });
     } else {
       $(formRegister.validationErrors).each(function(index, error) {

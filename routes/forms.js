@@ -1,5 +1,6 @@
 var express = require('express');
 var formsModel = require('../models/form');
+var formSubmition = require('../models/formSubmition');
 var mongoose = require('mongoose');
 
 var router = express.Router();
@@ -18,14 +19,19 @@ router.get('/getById/:id', function(req, res, next) {
         if(err) throw err;
         var validDate = new Date(result.validUntil);
 
-        if(validDate >= Date.now()) {
-//        if(validDate <= Date.now()) {
+        if(validDate <= Date.now()) {
             res.send({error: 'Form invalid since ' + validDate.toLocaleDateString() });
             return;
         }
 
         res.send(result);
     });
+});
+
+router.post('/save', function(req, res, next) {
+    console.log(req.body);
+    res.send('Ok');
+    //formSubmition.create()
 });
 
 module.exports = router;
