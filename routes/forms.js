@@ -29,9 +29,8 @@ router.get('/getById/:id', function(req, res, next) {
 });
 
 router.post('/save', function(req, res, next) {
-    console.log(req.body);
-    res.send('Ok');
-    //formSubmition.create()
+    formSubmition.create(req.body);
+    res.send("Data Saved");
 });
 
 module.exports = router;

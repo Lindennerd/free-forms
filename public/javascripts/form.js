@@ -1,5 +1,8 @@
 function loadForm(form) {
     $('#form>.card-body>.card-title').text(form.name);
+    var formId = $('#form-id').val().trim();
+
+    $('#view-data').attr('href', '/forms/data/' + formId);
 
     $(form.fields).each(function (index, field) {
         if (field.type === 'textfield') {
@@ -22,6 +25,37 @@ function loadForm(form) {
             $('#form>.card-body').append(fieldGroup);
         }
     });
+
+    $('[name="send"]').click(function () {
+        const questions = $('.form-group').map(function (index, el) {
+            return {
+                question: $('label', el).text(),
+                answer: $('input, select', el).val()
+            }
+        });
+
+        $.ajax({
+            url: '/forms/save',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                form: formId,
+                questions: questions
+            })
+        }).then(function (response) {
+            //!TODO: Implement messages service
+            clearAnswers();
+        }).catch(function (error) {
+            console.log(error)
+        });
+    });
+
+
+    function clearAnswers() {
+        $('.form-group').each(function(index, el){
+            $('input, select', el).val("");
+        });
+    }
 }
 
 $(document).ready(function () {
@@ -33,27 +67,5 @@ $(document).ready(function () {
         })
 
 
-    $('[name="send"]').click(function () {
-        const questions = $('.form-group').map(function (index, el) {
-            return {
-                question: $('label', el).text(),
-                answer: $('input', el).val()
-            }
-        });
-
-        $.ajax({
-            url: '/forms/save',
-            method: 'POST',
-            contentType: 'application/json',
-            data: {
-                form: $('#form-id').val(),
-                questions: questions
-            }
-        }).then(function (response) {
-            //!TODO: Implement messages service
-        }).catch(function (error) {
-            console.log(error)
-        });
-
-    });
+    
 });
