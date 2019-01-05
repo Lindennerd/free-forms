@@ -16,12 +16,12 @@ $(document).ready(function () {
       currentField = selectfield;
     }
 
-    if(selectedField === 'datefield') {
+    if (selectedField === 'datefield') {
       datefield.setField($field);
       currentField = datefield;
     }
 
-    if(selectedField === 'choicesfield') {
+    if (selectedField === 'choicesfield') {
       choicesField.setField($field);
       currentField = choicesField;
     }
@@ -35,19 +35,22 @@ $(document).ready(function () {
     $('[name="field-types"]').val(0);
   });
 
-  $('[name="save"]').click(function() {
+  $('[name="save"]').click(function () {
     formRegister.setName($('[name="name"]').val());
     formRegister.setValidate($('[name="validUntil"]').val());
+    formRegister.setPassword($('#pwd').val(), $('#pwdConfirmation').val())
 
-    if(formRegister.isValid()) {
+    if (formRegister.isValid()) {
       formRegister.save()
-        .then(function(response){
+        .then(function (response) {
           window.open('/forms/ ' + response, '_blank');
         });
     } else {
-      $(formRegister.validationErrors).each(function(index, error) {
-        console.log(error);
-      }); 
+      $(formRegister.validationErrors).each(function (index, error) {
+        $.notify(error, "error");
+      });
+
+      formRegister.clearErrors();
     }
   })
 })

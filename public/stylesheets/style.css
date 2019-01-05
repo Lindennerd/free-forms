@@ -2,3 +2,9 @@ body {
   background-color: #eee;
   margin: 1em 0 0 0;
 }
+
+.card-title {
+  border-bottom: solid 1px #eee;
+  font-weight: 500;
+  font-size: 18px;
+}

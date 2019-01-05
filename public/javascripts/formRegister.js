@@ -3,8 +3,9 @@ const formRegister = (function(){
     const fields = [];
     let formName = "";
     let formValidate = null;
+    let formPassword = "";
 
-    const validationErrors = []
+    let validationErrors = []
 
     return{
         setName: function(name) {
@@ -23,11 +24,6 @@ const formRegister = (function(){
                 isValid = false;
             }
 
-            if(!formValidate) {
-                validationErrors.push("Set a validation for the form");
-                isValid = false;
-            }
-
             return isValid;
         },
 
@@ -37,10 +33,21 @@ const formRegister = (function(){
             formValidate = validate;
         },
 
+        setPassword: function(pwd, confirmation) {
+            if(pwd) {
+                if(pwd === confirmation) {
+                    formPassword = pwd;
+                } else {
+                    validationErrors.push('Password and Confirmation dont match');
+                }
+            }
+        },
+
         save: function() {
             const form = {
                 name: formName,
                 validate: formValidate,
+                formPassword: formPassword,
                 fields: fields
             };
 
@@ -66,6 +73,10 @@ const formRegister = (function(){
             if(field.type === 'datefield') {
                 $formFields.append(datefield.build(field));
             }
+        },
+
+        clearErrors: function() {
+            validationErrors = [];
         }
     }
 })();
