@@ -12,9 +12,11 @@ var app = express();
 
 var mongoose = require('mongoose');
 
-var dbConnection = app.get('env') === 'development'
-	? 'mongodb://localhost:27017/freeforms'
-	: 'mongodb://lindennerd:mydb1234@ds115283.mlab.com:15283/freeforms';
+// var dbConnection = app.get('env') === 'development'
+// 	? 'mongodb://localhost:27017/freeforms'
+// 	: 'mongodb://lindennerd:mydb1234@ds115283.mlab.com:15283/freeforms';
+
+var dbConnection = 'mongodb://lindennerd:mydb1234@ds115283.mlab.com:15283/freeforms';
 
 mongoose.connect(dbConnection);
 
