@@ -16,7 +16,7 @@ var mongoose = require('mongoose');
 // 	? 'mongodb://localhost:27017/freeforms'
 // 	: 'mongodb://lindennerd:mydb1234@ds115283.mlab.com:15283/freeforms';
 
-var dbConnection = 'mongodb://lindennerd:mydb1234@ds115283.mlab.com:15283/freeforms';
+var dbConnection = 'mongodb://localhost:27017/freeforms';
 
 mongoose.connect(dbConnection);
 
@@ -39,6 +39,7 @@ app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist
 app.use('/popper', express.static(path.join(__dirname, 'node_modules/popper/dist/')))
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/')))
 app.use('/watchjs', express.static(path.join(__dirname, 'node_modules/melanke-watchjs/src/')));
+app.use('/underscore', express.static(path.join(__dirname, 'node_modules/underscore/')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

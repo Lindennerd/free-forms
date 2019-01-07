@@ -1,4 +1,5 @@
 function loadForm(form) {
+
     $('#form>.card-body>.card-title').text(form.name);
     var formId = $('#form-id').val().trim();
 
@@ -43,7 +44,7 @@ function loadForm(form) {
                 questions: questions
             })
         }).then(function (response) {
-            //!TODO: Implement messages service
+            $.notify("Form sent to Server successfully!", "success");
             clearAnswers();
         }).catch(function (error) {
             console.log(error)
@@ -63,7 +64,7 @@ $(document).ready(function () {
     $.get('/forms/getById/' + formId)
         .then(loadForm)
         .fail(function (err) {
-            console.error(err);
+            $.notify(err.responseText);
         })
 
 

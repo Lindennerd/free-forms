@@ -17,6 +17,11 @@ router.get('/getById/:id', function (req, res, next) {
     }
     formsModel.findById(id, function (err, result) {
         if (err) throw err;
+        if (!result) {
+            res.status(500).send('Invalid Form');
+            return;
+        }
+
         var validDate = new Date(result.validUntil);
 
         if (validDate <= Date.now()) {
