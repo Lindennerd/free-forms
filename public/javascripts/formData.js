@@ -1,9 +1,8 @@
 function buildCharts(field, data) {
     const groupped = _.groupBy(data, function(it) {
+        console.log(it.questions);
         return it.questions
     });
-
-    console.log(groupped);
 }
 
 function formData(formId, data) {

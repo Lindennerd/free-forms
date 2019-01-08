@@ -11,7 +11,9 @@ const formSchema = new Schema({
 });
 
 formSchema.pre('save', function(next){
-    this.password = md5(this.password);
+    if(this.password) {
+        this.password = md5(this.password);
+    }
     next();
 });
 
