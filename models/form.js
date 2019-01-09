@@ -14,6 +14,12 @@ formSchema.pre('save', function(next){
     if(this.password) {
         this.password = md5(this.password);
     }
+
+    if(!this.validUntil) {
+        const date = new Date();
+        this.validUntil = date.setFullYear(date.getFullYear() + 1);
+    }
+
     next();
 });
 

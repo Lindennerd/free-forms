@@ -66,7 +66,4 @@ $(document).ready(function () {
         .fail(function (err) {
             $.notify(err.responseText);
         })
-
-
-    
 });

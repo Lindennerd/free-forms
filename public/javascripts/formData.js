@@ -1,28 +1,25 @@
-function buildCharts(field, data) {
-    const groupped = _.groupBy(data, function(it) {
-        console.log(it.questions);
-        return it.questions
-    });
-}
-
 function formData(formId, data) {
     $('#answers-qtd').text(data.length);
-
-    $(data[0].questions).each(function(index, field){
-        const question = field[0];
-        $('#fields-select').append(
-            $('<option>', {
-                value: question.question,
-                text: question.question
-            })
-        )
-    })
-
-    $('#fields-select').change(function(event) {
-        const fieldSelected = $(event.target).val();
-        buildCharts(fieldSelected, data);
+    const questions = _.flatten(
+        data.map(function(form, index) {
+            return form.questions;
+        })
+    ).map(function(question){
+        return {
+            question: question["0"].question,
+            answer: question["0"].answer
+        }
     });
 
+    const tableData = _.groupBy(questions, function(question){
+        return question.question;
+    });
+
+    const chartData = _.groupBy(questions, function(question){
+        return question.answer;
+    })
+
+    console.log(chartData);
 }
 
 $(document).ready(function(){
