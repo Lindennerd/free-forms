@@ -37,16 +37,15 @@ router.get('/data/:id', function (req, res, next) {
     res.render('formData', { formId: req.params.id });
 });
 
-router.get('/recoverdata/:id', function(req, res, next) {
-    formSubmition.find({ form: req.params.id }, function(err, result) {
-        if(err) {
+router.get('/recoverdata/:id', function (req, res, next) {
+    
+    formSubmition.aggregate([{ $group: { _id: "$questions.question", answers: { $push: "$questions.answer" } } }])
+        .then(function (result) {
+            res.send(result);
+        })
+        .catch(function(err){
             res.status(500).send(err);
-            return;
-        }
-
-        console.log(result);
-        res.send(result);
-    })
+        });
 });
 
 router.post('/save', function (req, res, next) {

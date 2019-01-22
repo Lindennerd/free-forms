@@ -1,33 +1,23 @@
 function formData(formId, data) {
-    $('#answers-qtd').text(data.length);
-    const flattenForms = _.flatten(
-        data.map(function(form, index) {
-            return form.questions;
+    const headers = data._id;
+    const content = data.answers;
+    const $table = $('table');
+
+    $(data._id).each(function(index, question) {
+        $('thead', $table).append($('<th>', {text: question}));
+    });
+
+    $(data.answers).each(function(x, answerList) {
+        const $row = $('<tr>');
+        const $tbody = $('tbody', $table);
+        $(answerList).each(function(y, answer) {
+            $row.append(
+                $('<td>', { text: answer })
+            );
         })
-    )
-    
-    for(let index in flattenForms) {
-        const form = flattenForms[index];
-        console.log(form);
-    }
 
-    const mappedQuestions = flattenForms.map(function(question){
-        return {
-            question: question["0"].question,
-            answer: question["0"].answer
-        }
+        $tbody.append($row);
     });
-
-    const tableData = _.groupBy(mappedQuestions, function(question){
-        return question.question;
-    });
-
-    const chartData = _.groupBy(mappedQuestions, function(question){
-        return question.answer;
-    })
-
-    console.log(chartData);
-    console.log(tableData);
 }
 
 $(document).ready(function(){
@@ -35,7 +25,7 @@ $(document).ready(function(){
     $.get('/forms/recoverdata/' + formId)
         .then(function(response) {
             if(response.length > 0) {
-                formData(formId, response);
+                formData(formId, response[0]);
             } else {
                 $('#nothing-to-display').show();
                 $('#form-data').hide();

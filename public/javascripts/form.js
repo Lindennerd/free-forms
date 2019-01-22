@@ -41,6 +41,7 @@ function loadForm(form) {
             contentType: 'application/json',
             data: JSON.stringify({
                 form: formId,
+                submittedIn: new Date().toISOString(),
                 questions: questions
             })
         }).then(function (response) {
