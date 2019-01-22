@@ -37,11 +37,12 @@ const datefield = (function($){
 
             $formGroup.append($('<label>', {
                 text: field.question,
+                class: 'question'
             }));
 
             const $input = $('<input>', {
                 type: 'date',
-                class: 'form-control',
+                class: 'form-control answer',
             });
 
             if(field.minDate) $input.attr('min', field.minDate);

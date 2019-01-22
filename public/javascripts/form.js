@@ -33,7 +33,7 @@ function loadForm(form) {
                 question: $('label', el).text(),
                 answer: $('input, select', el).val()
             }
-        });
+        }).toArray();
 
         $.ajax({
             url: '/forms/save',

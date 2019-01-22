@@ -15,10 +15,18 @@ const selectfield = (function ($) {
             return;
         }
 
+        const optionVal = $('[name="new-option"]').val();
+
         const $li = $('<li>', {
             class: 'list-group-item d-flex justify-content-between align-items-center',
-            text: $('[name="new-option"]').val()
-        });
+            text: optionVal
+        }).append(
+            $('<input>', {
+                value: optionVal,
+                style: 'display: none',
+                class: 'option-field'
+            })
+        );
 
         const $span = $('<span>', {
             class: 'badge badge-danger badge-pill',
@@ -30,6 +38,8 @@ const selectfield = (function ($) {
         $li.append($span);
         $listGroup.append($li);
         $('[name="new-option"]').val('')
+
+
     }
 
     return {
@@ -57,12 +67,15 @@ const selectfield = (function ($) {
         },
 
         getField: function () {
-            const options = $('.list-group-item')
-                .map(function (index, item) {
-                    return item.textContent.substr(0, (item.textContent.length - 1));
-                });
+            const options = [];
+            const $optionFields = $('.option-field');
 
-            console.log(options);
+            for(let index in $optionFields) {
+                const $optionField = $optionFields[index];
+                if($optionField.value) {
+                    options.push($optionField.value);
+                }
+            }           
 
             return {
                 type: 'selectfield',
@@ -73,10 +86,10 @@ const selectfield = (function ($) {
 
         build: function (field) {
             const $formGroup = $('<div>', { class: 'form-group' });
-            const $select = $('<select>', { class: 'form-control' });
-            const $label = $('<label>', { text: field.question });
+            const $select = $('<select>', { class: 'form-control answer' });
+            const $label = $('<label>', { text: field.question, class: 'question' });
 
-            field.options.each(function (index, option) {
+            $(field.options).each(function (index, option) {
                 const $option = $('<option>', { text: option });
                 $select.append($option);
             });

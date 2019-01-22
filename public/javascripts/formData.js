@@ -1,25 +1,33 @@
 function formData(formId, data) {
     $('#answers-qtd').text(data.length);
-    const questions = _.flatten(
+    const flattenForms = _.flatten(
         data.map(function(form, index) {
             return form.questions;
         })
-    ).map(function(question){
+    )
+    
+    for(let index in flattenForms) {
+        const form = flattenForms[index];
+        console.log(form);
+    }
+
+    const mappedQuestions = flattenForms.map(function(question){
         return {
             question: question["0"].question,
             answer: question["0"].answer
         }
     });
 
-    const tableData = _.groupBy(questions, function(question){
+    const tableData = _.groupBy(mappedQuestions, function(question){
         return question.question;
     });
 
-    const chartData = _.groupBy(questions, function(question){
+    const chartData = _.groupBy(mappedQuestions, function(question){
         return question.answer;
     })
 
     console.log(chartData);
+    console.log(tableData);
 }
 
 $(document).ready(function(){

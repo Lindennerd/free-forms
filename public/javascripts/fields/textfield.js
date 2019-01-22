@@ -38,9 +38,9 @@ const textfield = (function ($) {
 
     build: function (field) {
       const $formGroup = $('<div>', { class: 'form-group' });
-      const $label = $('<label>', { text: field.question });
+      const $label = $('<label>', { text: field.question, class: 'question' });
       const $input = $('<input>', {
-        class: 'form-control',
+        class: 'form-control answer',
         value: field.defaultText
       });
 
